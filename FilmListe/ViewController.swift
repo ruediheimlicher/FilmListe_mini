@@ -167,7 +167,7 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
        Filmtable.headerView?.wantsLayer = true
       Filmtable.headerView?.layer?.backgroundColor = NSColor.red.cgColor
    
-   //    Filmtable.cornerView?.wantsLayer = true
+       Filmtable.cornerView?.wantsLayer = true
    //    Filmtable.cornerView?.layer?.backgroundColor = NSColor.red.cgColor
       //let view = view[0] as! NSView
       self.view.wantsLayer = true
@@ -190,12 +190,16 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
            for item in items
            {
                print("\t \(item)")
-               /*
+               
                if item == "TV_N"
-               {
+               {/*
+                   let path = "/Volumes/TV_N"
+                   let s = try! String(contentsOfFile: path)
+                   print(s)
+*/
                    let inhalt = try fileManager.contentsOfDirectory(atPath:"/Volumes/TV_N")
                }
-            */
+            
            }
            if let volumeurl = userDefaults.object(forKey: "volumeurl") as? URL {
                // let player = AVPlayer(url: defaultsUrl)
@@ -205,7 +209,7 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
            if volumeurl != nil
            {
                print("volumeurl \t \(volumeurl)")
-               let inhalt = try fileManager.contentsOfDirectory(atPath:"/Volumes" ?? "/Volumes")
+               let inhalt = try fileManager.contentsOfDirectory(atPath:"/Volumes" )
                
                print("inhalt \t \t\(inhalt)")}
            
@@ -217,11 +221,25 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
        }
        
        
+       
        print("volumeurl: \(volumeurl)")
        
       Kapitelpop.removeAllItems()
        Playerfenster.showWindow(self)
    }
+    
+    override func viewDidAppear()
+    {
+        super.viewDidAppear()
+        
+        /*
+        let volumenpfad = self.openDialog(pfad: "/Volumes/TV_N")
+        print("viewDidAppear: \(viewDidAppear)")
+        self.pfad = volumenpfad
+        //readList()
+         */
+        
+    }
 
    override var representedObject: Any? {
       didSet {
@@ -318,6 +336,7 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
       openPanel.allowsMultipleSelection = false
       openPanel.canChooseDirectories = true
       openPanel.canCreateDirectories = false
+       openPanel.canChooseFiles = false
        openPanel.showsHiddenFiles = false
        let volumeURL = URL.init(string: "/Volumes/TV_N")
        openPanel.directoryURL = volumeURL
@@ -336,9 +355,40 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
           userDefaults.set(self.pfad, forKey: "volumeurl")
          self.readList()
       }
-      
    }
+    
+    
 
+    func openDialog(pfad: String)->String
+    {
+        print("Pfad: *\(pfad)*")
+        var selectedPath:String = ""
+        let openPanel = NSOpenPanel()
+        openPanel.canChooseFiles = false
+        openPanel.allowsMultipleSelection = false
+        openPanel.canChooseDirectories = true
+        openPanel.canCreateDirectories = false
+        openPanel.showsHiddenFiles = false
+        let volumeURL = URL.init(string: pfad)
+        openPanel.directoryURL = volumeURL
+        openPanel.title = "Select a folder"
+        
+        openPanel.beginSheetModal(for:self.view.window!)
+        { (response) in
+            if response.rawValue == NSApplication.ModalResponse.OK.rawValue
+            {
+                selectedPath = openPanel.url!.path
+                // do whatever you what with the file path
+                Swift.print("path: \(selectedPath)")
+                self.pfad = selectedPath
+                self.Filmordner.stringValue = selectedPath
+            }
+            openPanel.close()
+            userDefaults.set(self.pfad, forKey: "volumeurl")
+            
+        }
+        return selectedPath
+    }
    
    func readList()
     {
@@ -377,7 +427,7 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
                 
                 titelarray.removeFirst()
                 var titelstring = titelarray.joined(separator: " ")
-                // print("Datum: \(datum) titelstring: \(titelstring)")
+                 print("Datum: \(datum) titelstring: \(titelstring)")
                 
                 var titelpfad = pfad+"/"+item
                 var titelurl = URL.init(string: titelpfad)
