@@ -168,7 +168,7 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
       Filmtable.headerView?.layer?.backgroundColor = NSColor.red.cgColor
    
        Filmtable.cornerView?.wantsLayer = true
-   //    Filmtable.cornerView?.layer?.backgroundColor = NSColor.red.cgColor
+       Filmtable.cornerView?.layer?.backgroundColor = NSColor.red.cgColor
       //let view = view[0] as! NSView
       self.view.wantsLayer = true
       hintergrundfarbe  = NSColor.init(red: 8.0/255, 
