@@ -238,7 +238,7 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
         self.pfad = volumenpfad
         //readList()
          */
-        
+        self.openVolumeDialog(pfad: "/Volumers")
     }
 
    override var representedObject: Any? {
@@ -357,7 +357,33 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
       }
    }
     
-    
+    func openVolumeDialog(pfad: String)
+    {
+        let openPanel = NSOpenPanel()
+        openPanel.prompt = "Select"
+        openPanel.message = "Please select a folder"
+        openPanel.allowedContentTypes = [.directory]
+        openPanel.canChooseFiles = false
+        openPanel.allowsOtherFileTypes = false
+        openPanel.allowsMultipleSelection = false
+        openPanel.canChooseDirectories = true
+        
+        // Open the modal folder selection panel.
+        let okButtonPressed = openPanel.runModal()
+        
+        if okButtonPressed == .OK {
+            // If the user doesn't select anything, then the URL \"file:///\" is returned, which we ignore
+            if let url = openPanel.urls.first,
+               url.absoluteString != "file:///" {
+                print("User selected folder: \\(url)")
+                // Persist user selected folder for later launches
+            } else {
+                print("User did not select a folder")
+            }
+        } else {
+            print("User cancelled folder selection panel")
+        }
+    }
 
     func openDialog(pfad: String)->String
     {
