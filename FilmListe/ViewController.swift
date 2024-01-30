@@ -163,7 +163,7 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
       // https://developer.apple.com/forums/thread/654874      Filmtable.usesAutomaticRowHeights = true
       // Do any additional setup after loading the view.
       self.view.window?.acceptsMouseMovedEvents = true
-      Filmtable.headerView?.frame = NSMakeRect(0, 0, (Filmtable.headerView?.frame.width)!, 32.00)
+      Filmtable.headerView?.frame = NSMakeRect(0, 0, (Filmtable.headerView?.frame.width)!, 0.00)
        Filmtable.headerView?.wantsLayer = true
       Filmtable.headerView?.layer?.backgroundColor = NSColor.red.cgColor
    
@@ -175,6 +175,12 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
                                        green: 111.0/255, 
                                        blue: 248.0/255, 
                                        alpha: 0.98)
+       
+       hintergrundfarbe  = NSColor.init(red: 18.0/255,
+                                        green: 200.0/255,
+                                        blue: 48.0/255,
+                                        alpha: 0.98)
+       
       self.view.layer?.backgroundColor =  hintergrundfarbe.cgColor
 
       Playerfenster = rFilmController()
@@ -238,7 +244,7 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
         self.pfad = volumenpfad
         //readList()
          */
-        self.openVolumeDialog(pfad: "/Volumers")
+    //    self.openVolumeDialog(pfad: "/Volumers")
     }
 
    override var representedObject: Any? {
@@ -338,7 +344,7 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
       openPanel.canCreateDirectories = false
        openPanel.canChooseFiles = false
        openPanel.showsHiddenFiles = false
-       let volumeURL = URL.init(string: "/Volumes/TV_N")
+       let volumeURL = URL.init(string: "/Volumes/TV_N/Spielfilm")
        openPanel.directoryURL = volumeURL
       openPanel.title = "Select a folder"
       
@@ -359,6 +365,83 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
     
     func openVolumeDialog(pfad: String)
     {
+      // https://swiftylion.com/articles/read-and-write-files-in-user-folders
+        
+        func persistBookmark(url: URL) throws -> Data {
+           let bookmarkData = try url.bookmarkData(options: .withSecurityScope, includingResourceValuesForKeys: nil, relativeTo: nil)
+           UserDefaults.standard.set(bookmarkData, forKey: key(for: url))
+           return bookmarkData
+        }
+         
+        // Helper function that creates the bookmark key
+        func key(for url: URL) -> String {
+           String(format: "bd_%@", url.absoluteString)
+        }
+        
+        enum DarwinAccess {
+         
+          enum AccessMode {
+         
+            case readOnly
+            case readWrite
+         
+            var permission: Int32 {
+              switch self {
+              case .readOnly: return R_OK
+              case .readWrite: return (R_OK | W_OK)
+              }
+            }
+          }
+         
+          static func canAccess(url: URL, mode: AccessMode) -> Bool {
+            let path = url.path as NSString
+            return Darwin.access(path.fileSystemRepresentation, mode.permission) == 0
+          }
+        }
+        
+        struct Permissions: OptionSet {
+         
+          let rawValue: Int
+         
+          static let bookmark = Permissions(rawValue: 1 << 0)
+          static let darwinboxReadOnly = Permissions(rawValue: 1 << 1)
+          static let darwinboxReadWrite = Permissions(rawValue: 1 << 2)
+         
+          static let none: Permissions = []
+          static let readOnly: Permissions = [.bookmark, .darwinboxReadOnly]
+          static let readWrite: Permissions = [.bookmark, .darwinboxReadWrite]
+         
+          var canRead: Bool {
+            self.contains(.bookmark) || self.contains(.darwinboxReadOnly)
+          }
+         
+          var canWrite: Bool {
+            self.contains(.bookmark) || self.contains(.darwinboxReadWrite)
+          }
+         
+          init(rawValue newRawValue: Int) {
+            rawValue = newRawValue
+          }
+         
+          func matches(permissions: Permissions) -> Bool {
+            if permissions == .none {
+              return true
+            }
+         
+            return !self.intersection(permissions).isEmpty
+          }
+        }
+        struct AccessInfo {
+         
+          public var resolvedUrl: URL?
+          public var bookmarkData: Data?
+          public var permissions: Permissions
+         
+          static let empty = AccessInfo(permissions: .none)
+        }
+        
+        
+        
         let openPanel = NSOpenPanel()
         openPanel.prompt = "Select"
         openPanel.message = "Please select a folder"
@@ -377,12 +460,15 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
                url.absoluteString != "file:///" {
                 print("User selected folder: \\(url)")
                 // Persist user selected folder for later launches
+                
             } else {
                 print("User did not select a folder")
             }
         } else {
             print("User cancelled folder selection panel")
         }
+        
+        
     }
 
     func openDialog(pfad: String)->String
@@ -453,7 +539,7 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
                 
                 titelarray.removeFirst()
                 var titelstring = titelarray.joined(separator: " ")
-                 print("Datum: \(datum) titelstring: \(titelstring)")
+                 print("Datum: \(datum) *titelstring: \(titelstring)")
                 
                 var titelpfad = pfad+"/"+item
                 var titelurl = URL.init(string: titelpfad)
@@ -481,7 +567,8 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
              
              //let videoURL = URL(string: "https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_5MB.mp4")
              //let player = AVPlayer(url: fileURLArray[zeile])
-             let playerLayer = AVPlayerLayer(player: player)
+             
+               let playerLayer = AVPlayerLayer(player: player)
              playerLayer.frame = self.view.bounds
              self.view.layer?.addSublayer(playerLayer)
              player.play()
@@ -514,16 +601,23 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
                 }*/
                 
                 
-                let datumstring = zeilenarray.first
+                
                 let genrestring = zeilenarray[anz-2]
                 let volumestring = zeilenarray[anz-3]
-                let titelstring = zeilenarray.last
-                filmzeilendic["titel"] = zeilenarray.last
+                var titelarray = zeilenarray.last?.components(separatedBy:" ")
+                let datumstring = titelarray?[0]
+                filmzeilendic["datum"] = datumstring
+                titelarray?.removeFirst()
+                titelarray?.removeFirst()
+                
+                let titelstring = titelarray?.joined(separator: " ")
+                filmzeilendic["titel"] = titelstring//zeilenarray.last
                 //print("filmzeile: \(filmzeile.path) volumestring: \(volumestring) genrestring: \(genrestring) titelstring: \(titelstring)")
                 //print("filmzeilendic: \(filmzeilendic)")
                 FilmArray.append(filmzeilendic)
                 
             }// for urls
+            //FilmArray.sorted()
             //print("FilmArray: \(FilmArray)")
             Filmtable.reloadData()
             // process files

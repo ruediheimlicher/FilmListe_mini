@@ -20,6 +20,7 @@
 		BD6971922B6430A4006D677E /* ok_image.png in Resources */ = {isa = PBXBuildFile; fileRef = BD6971912B6430A4006D677E /* ok_image.png */; };
 		BD6971942B668792006D677E /* FilmListeWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6971932B668792006D677E /* FilmListeWindowController.swift */; };
 		BD6971962B668859006D677E /* quit.png in Resources */ = {isa = PBXBuildFile; fileRef = BD6971952B668859006D677E /* quit.png */; };
+		CAEB1B312B6958600099BB03 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CAEB1B302B6958600099BB03 /* Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		BD6971912B6430A4006D677E /* ok_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ok_image.png; sourceTree = "<group>"; };
 		BD6971932B668792006D677E /* FilmListeWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilmListeWindowController.swift; sourceTree = "<group>"; };
 		BD6971952B668859006D677E /* quit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quit.png; sourceTree = "<group>"; };
+		CAEB1B302B6958600099BB03 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,7 @@
 		BD6288D72B56FC4000BC383C /* FilmListe */ = {
 			isa = PBXGroup;
 			children = (
+				CAEB1B302B6958600099BB03 /* Info.plist */,
 				BD6288EE2B592D8E00BC383C /* Icons */,
 				BD6288D82B56FC4000BC383C /* AppDelegate.swift */,
 				BD6288DA2B56FC4000BC383C /* ViewController.swift */,
@@ -156,6 +159,7 @@
 			files = (
 				BD6288E02B56FC4100BC383C /* Assets.xcassets in Resources */,
 				BD6289162B59916900BC383C /* Filmfenster.storyboard in Resources */,
+				CAEB1B312B6958600099BB03 /* Info.plist in Resources */,
 				BD6971922B6430A4006D677E /* ok_image.png in Resources */,
 				BD6288E32B56FC4100BC383C /* Main.storyboard in Resources */,
 				BD6288F02B592DA100BC383C /* play.png in Resources */,
