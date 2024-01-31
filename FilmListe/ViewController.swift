@@ -141,6 +141,8 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
    var pfad = ""
    
     @IBOutlet weak var Quitknopf: NSButton!
+    @IBOutlet weak var Upknopf: NSButton!
+    @IBOutlet weak var Downknopf: NSButton!
     
    @IBOutlet weak var VolumeFeld: NSTextField!
    @IBOutlet weak var Filmordner: NSTextField!
@@ -334,7 +336,18 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
          i += 1
       }
    }
-   @IBAction  func report_Open(_ sender: NSButton) // 
+    
+    @IBAction  func report_Up(_ sender: NSButton) //
+    {
+        print("report_Up: *\(sender.state)*")
+    }
+    @IBAction  func report_Down(_ sender: NSButton) //
+    {
+        print("report_Down: *\(sender.state)*")
+    }
+
+    
+   @IBAction  func report_Open(_ sender: NSButton) //
    {
       print("Pfad: *\(pfad)*")
       let openPanel = NSOpenPanel()

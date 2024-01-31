@@ -893,13 +893,37 @@
                                     </menu>
                                 </popUpButtonCell>
                             </popUpButton>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IMO-6g-jDL">
+                                <rect key="frame" x="1631" y="282" width="76" height="199"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="square" title="Button" bezelStyle="shadowlessSquare" image="up" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="plC-Di-YL3">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="report_Up:" target="XfG-lQ-9wD" id="v0Z-fv-3J8"/>
+                                </connections>
+                            </button>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="npZ-Qv-bmN">
+                                <rect key="frame" x="1631" y="49" width="76" height="199"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="square" title="Button" bezelStyle="shadowlessSquare" image="down" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Fp4-Jo-Yvd">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="report_Down:" target="XfG-lQ-9wD" id="hAY-i6-4Rs"/>
+                                </connections>
+                            </button>
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="Downknopf" destination="npZ-Qv-bmN" id="c77-fz-w0e"/>
                         <outlet property="Filmordner" destination="B6b-nk-MIO" id="yqo-MZ-PQZ"/>
                         <outlet property="Filmtable" destination="How-kX-nnl" id="PXb-hf-V8y"/>
                         <outlet property="Kapitelpop" destination="Zan-aC-MPE" id="dlx-fj-Mw3"/>
                         <outlet property="Quitknopf" destination="Cyn-XH-8tR" id="Dxw-4T-McQ"/>
+                        <outlet property="Upknopf" destination="IMO-6g-jDL" id="YOR-VJ-Y02"/>
                         <outlet property="VolumeFeld" destination="Kzf-6z-fCd" id="owa-5C-ZFK"/>
                     </connections>
                 </viewController>
@@ -962,7 +986,9 @@
         </scene>
     </scenes>
     <resources>
+        <image name="down" width="188" height="290"/>
         <image name="play-32" width="32" height="32"/>
         <image name="quit" width="512" height="512"/>
+        <image name="up" width="188" height="290"/>
     </resources>
 </document>
