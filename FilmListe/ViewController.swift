@@ -151,6 +151,9 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
     @IBOutlet weak var Kapitelpop: NSPopUpButton!
     
    @IBOutlet var playerView:AVPlayerView!
+    
+    var listepos = 0 // Pos in Tableview
+
    
    var hintergrundfarbe = NSColor()
    var FilmArray = [[String:String]]()
@@ -271,9 +274,11 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
       var tabletag = info?["tabletag"] as! Int 
       tabletag%=1000
       let playpfad = FilmArray[zeile]["pfad"]
-      print("playpfad: \(playpfad)")
-      /*
-      guard let playURL = URL.init(string:playpfad!) else 
+       let filmurl = URL(fileURLWithPath: playpfad ?? "/Volumes/TV_N/Spielfilm")
+      print("playpfad: \(playpfad) filmurl: \(filmurl)")
+
+       /*
+      guard let playURL = URL.init(string:playpfad!) else
       {
          
          return  
@@ -283,9 +288,9 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
       // https://stackoverflow.com/questions/65874089/open-a-short-video-using-quicktime-player
       let config = NSWorkspace.OpenConfiguration()
       config.activates = true
-      let filmurl = fileURLArray[zeile]
+      let filmURL = fileURLArray[zeile]
       NSWorkspace.shared.open(
-          [filmurl],
+          [filmURL],
           withApplicationAt: URL(fileURLWithPath: "/System/Applications/QuickTime Player.app"),
           configuration: config
       )
@@ -484,14 +489,17 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
             {
                 fileURLArray.append(filmzeile)
                 var filmzeilendic  = [String:String]()
-                filmzeilendic["pfad"] = "neu"//filmzeile.path
+                filmzeilendic["pfad"] = filmzeile.path
                 //filmzeilendic["viewed"] = "0"
                 var zeilenarray =  filmzeile.path.components(separatedBy: "/")
-                 let anz = zeilenarray.count
+                var filmzeilenarray = filmzeile.pathComponents
+                print("filmzeilenarray: \(filmzeilenarray)")
+                let anz = filmzeilenarray.count
+                
                 
                 
                 let hiddenlist = ["Spotlight-V100",".DS_Store",".Trashes",".Spotlight-V100"]
-                let last = zeilenarray.last ?? "x"
+                let last = filmzeilenarray.last ?? "x"
                 if last.components(separatedBy: " ").count == 1 // Ordner suchen
                 {
                     print("ordner: \(last)")
@@ -509,18 +517,21 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
                 
                 
                 
-                let genrestring = zeilenarray[anz-2]
-                let volumestring = zeilenarray[anz-3]
-                var titelarray = zeilenarray.last?.components(separatedBy:" ")
+                let genrestring = filmzeilenarray[anz-2]
+                let volumestring = filmzeilenarray[anz-3]
+                var titelarray = filmzeilenarray.last?.components(separatedBy:" ")
                 let datumstring = titelarray?[0]
                 filmzeilendic["datum"] = datumstring
                 titelarray?.removeFirst()
                 titelarray?.removeFirst()
-                
+                var filmsuffix = titelarray?.last?.components(separatedBy: ".").last
+                var filmtitelraw = titelarray?.last?.components(separatedBy: ".").first ?? "Film"
+                titelarray?.removeLast()
+                titelarray?.append( filmtitelraw )
                 let titelstring = titelarray?.joined(separator: " ")
                 filmzeilendic["titel"] = titelstring//zeilenarray.last
                 //print("filmzeile: \(filmzeile.path) volumestring: \(volumestring) genrestring: \(genrestring) titelstring: \(titelstring)")
-                //print("filmzeilendic: \(filmzeilendic)")
+                print("filmzeilendic: \(filmzeilendic)")
                 FilmArray.append(filmzeilendic)
                 
             }// for urls
