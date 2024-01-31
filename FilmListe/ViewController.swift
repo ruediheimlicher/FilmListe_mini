@@ -363,113 +363,7 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
       }
    }
     
-    func openVolumeDialog(pfad: String)
-    {
-      // https://swiftylion.com/articles/read-and-write-files-in-user-folders
-        
-        func persistBookmark(url: URL) throws -> Data {
-           let bookmarkData = try url.bookmarkData(options: .withSecurityScope, includingResourceValuesForKeys: nil, relativeTo: nil)
-           UserDefaults.standard.set(bookmarkData, forKey: key(for: url))
-           return bookmarkData
-        }
-         
-        // Helper function that creates the bookmark key
-        func key(for url: URL) -> String {
-           String(format: "bd_%@", url.absoluteString)
-        }
-        
-        enum DarwinAccess {
-         
-          enum AccessMode {
-         
-            case readOnly
-            case readWrite
-         
-            var permission: Int32 {
-              switch self {
-              case .readOnly: return R_OK
-              case .readWrite: return (R_OK | W_OK)
-              }
-            }
-          }
-         
-          static func canAccess(url: URL, mode: AccessMode) -> Bool {
-            let path = url.path as NSString
-            return Darwin.access(path.fileSystemRepresentation, mode.permission) == 0
-          }
-        }
-        
-        struct Permissions: OptionSet {
-         
-          let rawValue: Int
-         
-          static let bookmark = Permissions(rawValue: 1 << 0)
-          static let darwinboxReadOnly = Permissions(rawValue: 1 << 1)
-          static let darwinboxReadWrite = Permissions(rawValue: 1 << 2)
-         
-          static let none: Permissions = []
-          static let readOnly: Permissions = [.bookmark, .darwinboxReadOnly]
-          static let readWrite: Permissions = [.bookmark, .darwinboxReadWrite]
-         
-          var canRead: Bool {
-            self.contains(.bookmark) || self.contains(.darwinboxReadOnly)
-          }
-         
-          var canWrite: Bool {
-            self.contains(.bookmark) || self.contains(.darwinboxReadWrite)
-          }
-         
-          init(rawValue newRawValue: Int) {
-            rawValue = newRawValue
-          }
-         
-          func matches(permissions: Permissions) -> Bool {
-            if permissions == .none {
-              return true
-            }
-         
-            return !self.intersection(permissions).isEmpty
-          }
-        }
-        struct AccessInfo {
-         
-          public var resolvedUrl: URL?
-          public var bookmarkData: Data?
-          public var permissions: Permissions
-         
-          static let empty = AccessInfo(permissions: .none)
-        }
-        
-        
-        
-        let openPanel = NSOpenPanel()
-        openPanel.prompt = "Select"
-        openPanel.message = "Please select a folder"
-        openPanel.allowedContentTypes = [.directory]
-        openPanel.canChooseFiles = false
-        openPanel.allowsOtherFileTypes = false
-        openPanel.allowsMultipleSelection = false
-        openPanel.canChooseDirectories = true
-        
-        // Open the modal folder selection panel.
-        let okButtonPressed = openPanel.runModal()
-        
-        if okButtonPressed == .OK {
-            // If the user doesn't select anything, then the URL \"file:///\" is returned, which we ignore
-            if let url = openPanel.urls.first,
-               url.absoluteString != "file:///" {
-                print("User selected folder: \\(url)")
-                // Persist user selected folder for later launches
-                
-            } else {
-                print("User did not select a folder")
-            }
-        } else {
-            print("User cancelled folder selection panel")
-        }
-        
-        
-    }
+
 
     func openDialog(pfad: String)->String
     {
@@ -628,7 +522,113 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
         
     }// readList
    
- 
+    func openVolumeDialog(pfad: String)
+    {
+      // https://swiftylion.com/articles/read-and-write-files-in-user-folders
+        
+        func persistBookmark(url: URL) throws -> Data {
+           let bookmarkData = try url.bookmarkData(options: .withSecurityScope, includingResourceValuesForKeys: nil, relativeTo: nil)
+           UserDefaults.standard.set(bookmarkData, forKey: key(for: url))
+           return bookmarkData
+        }
+         
+        // Helper function that creates the bookmark key
+        func key(for url: URL) -> String {
+           String(format: "bd_%@", url.absoluteString)
+        }
+        
+        enum DarwinAccess {
+         
+          enum AccessMode {
+         
+            case readOnly
+            case readWrite
+         
+            var permission: Int32 {
+              switch self {
+              case .readOnly: return R_OK
+              case .readWrite: return (R_OK | W_OK)
+              }
+            }
+          }
+         
+          static func canAccess(url: URL, mode: AccessMode) -> Bool {
+            let path = url.path as NSString
+            return Darwin.access(path.fileSystemRepresentation, mode.permission) == 0
+          }
+        }
+        
+        struct Permissions: OptionSet {
+         
+          let rawValue: Int
+         
+          static let bookmark = Permissions(rawValue: 1 << 0)
+          static let darwinboxReadOnly = Permissions(rawValue: 1 << 1)
+          static let darwinboxReadWrite = Permissions(rawValue: 1 << 2)
+         
+          static let none: Permissions = []
+          static let readOnly: Permissions = [.bookmark, .darwinboxReadOnly]
+          static let readWrite: Permissions = [.bookmark, .darwinboxReadWrite]
+         
+          var canRead: Bool {
+            self.contains(.bookmark) || self.contains(.darwinboxReadOnly)
+          }
+         
+          var canWrite: Bool {
+            self.contains(.bookmark) || self.contains(.darwinboxReadWrite)
+          }
+         
+          init(rawValue newRawValue: Int) {
+            rawValue = newRawValue
+          }
+         
+          func matches(permissions: Permissions) -> Bool {
+            if permissions == .none {
+              return true
+            }
+         
+            return !self.intersection(permissions).isEmpty
+          }
+        }
+        struct AccessInfo {
+         
+          public var resolvedUrl: URL?
+          public var bookmarkData: Data?
+          public var permissions: Permissions
+         
+          static let empty = AccessInfo(permissions: .none)
+        }
+        
+        
+        
+        let openPanel = NSOpenPanel()
+        openPanel.prompt = "Select"
+        openPanel.message = "Please select a folder"
+        openPanel.allowedContentTypes = [.directory]
+        openPanel.canChooseFiles = false
+        openPanel.allowsOtherFileTypes = false
+        openPanel.allowsMultipleSelection = false
+        openPanel.canChooseDirectories = true
+        
+        // Open the modal folder selection panel.
+        let okButtonPressed = openPanel.runModal()
+        
+        if okButtonPressed == .OK {
+            // If the user doesn't select anything, then the URL \"file:///\" is returned, which we ignore
+            if let url = openPanel.urls.first,
+               url.absoluteString != "file:///" {
+                print("User selected folder: \\(url)")
+                // Persist user selected folder for later launches
+                
+            } else {
+                print("User did not select a folder")
+            }
+        } else {
+            print("User cancelled folder selection panel")
+        }
+        
+        
+    }
 
 }// ViewController
 
@@ -678,4 +678,5 @@ extension rViewController
       
       
    }
+    
 }

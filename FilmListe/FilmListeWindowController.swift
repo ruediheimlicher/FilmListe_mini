@@ -10,10 +10,10 @@ import Cocoa
 
 class FilmListeWindowController: NSWindowController, NSWindowDelegate {
     
-    let minWindowWidth: CGFloat = 200
-    let minWindowHeight: CGFloat = 150
-    let maxWindowWidth: CGFloat = 1200
-    let maxWindowHeight: CGFloat = 900
+    let minWindowWidth: CGFloat = 1900
+    let minWindowHeight: CGFloat = 1000
+    let maxWindowWidth: CGFloat = 1900
+    let maxWindowHeight: CGFloat = 1000
 
     override func windowDidLoad() {
         super.windowDidLoad()
