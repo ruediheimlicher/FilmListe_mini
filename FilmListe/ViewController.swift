@@ -10,6 +10,7 @@ import Foundation
 import AVKit
 import AVFoundation
 import SwiftUI
+import Carbon.HIToolbox
 
 let userDefaults = UserDefaults.standard
 
@@ -135,6 +136,82 @@ class rButtonZelle:NSTableCellView, NSMenuDelegate,NSTableViewDataSource,NSTabVi
 }
 
 
+class rFilmTable:NSTableView, NSTableViewDelegate
+{
+    required init?(coder  aDecoder : NSCoder)
+    {
+       super.init(coder: aDecoder)
+       //self.Play?.target = self
+       //self.Play?.action = #selector(ButtonUsed(_:))
+     }
+    override init(frame: CGRect)
+    {
+          super.init(frame: frame)
+         // initialize what is needed
+        //self.acceptsFirstResponder:true
+      }
+    override func becomeFirstResponder() -> Bool {
+            return true
+        }
+    // https://stackoverflow.com/questions/42705980/arrow-keys-in-spritekit
+    
+    @IBAction  func moveUP(_ sender: Any?)
+    {
+        print("moveUp anz: \(numberOfRows) selectedRow: \(selectedRow)")
+        if selectedRow > 0
+        {
+            selectRowIndexes([selectedRow-1], byExtendingSelection: false)
+            scrollRowToVisible(selectedRow-1)
+            //scrollToBeginningOfDocument(nil)
+        }
+        
+    }
+ 
+    @IBAction override func moveDown(_ sender: Any?)
+    {
+        print("moveDown anz: \(numberOfRows) selectedRow: \(selectedRow)")
+        if selectedRow < numberOfRows - 1
+        {
+            selectRowIndexes([selectedRow+1], byExtendingSelection: false)
+            scrollRowToVisible(selectedRow+1)
+            //scrollToBeginningOfDocument(nil)
+        }
+        
+    }
+
+    
+    override func keyDown(with event: NSEvent) {
+
+          if event.characters?.count == 1 {
+              let character = event.keyCode
+              switch (character) {
+              case UInt16(kVK_UpArrow):
+                  if selectedRow == 0 {
+                      selectRowIndexes([numberOfRows - 1], byExtendingSelection: false)
+                      scrollRowToVisible(numberOfRows - 1)
+                      //scrollToEndOfDocument(nil)
+                  } else {
+                      super.keyDown(with: event)
+                  }
+                  break
+              case UInt16(kVK_DownArrow):
+                  if selectedRow == numberOfRows - 1 {
+                      selectRowIndexes([0], byExtendingSelection: false)
+                      scrollRowToVisible(0)
+                      //scrollToBeginningOfDocument(nil)
+                  } else {
+                      super.keyDown(with: event)
+                  }
+              default:
+                  super.keyDown(with: event)
+                  break
+              }
+          } else {
+              super.keyDown(with: event)
+          }
+      }
+}
+
 class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSource,NSWindowDelegate
 {
 
@@ -144,10 +221,12 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
     @IBOutlet weak var Upknopf: NSButton!
     @IBOutlet weak var Downknopf: NSButton!
     
+    @IBOutlet weak var Playknopf: NSButton!
+    
    @IBOutlet weak var VolumeFeld: NSTextField!
    @IBOutlet weak var Filmordner: NSTextField!
    
-   @IBOutlet weak var Filmtable: NSTableView!
+   @IBOutlet weak var Filmtable: rFilmTable!
     @IBOutlet weak var Kapitelpop: NSPopUpButton!
     
    @IBOutlet var playerView:AVPlayerView!
@@ -188,7 +267,7 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
        
       self.view.layer?.backgroundColor =  hintergrundfarbe.cgColor
 
-      Playerfenster = rFilmController()
+      //Playerfenster = rFilmController()
       NotificationCenter.default.addObserver(self, selector:#selector(PlayAktion(_:)),name:NSNotification.Name(rawValue: "tableplay"),object:nil)
        let fileManager = FileManager.default
        let volumeurl = userDefaults.object(forKey: "volumeurl") as?  String //"/Volumes/"
@@ -235,8 +314,11 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
        
        print("volumeurl: \(volumeurl)")
        
+       Filmtable.delegate = self
+       Filmtable.dataSource = self
+       
       Kapitelpop.removeAllItems()
-       Playerfenster.showWindow(self)
+       //Playerfenster.showWindow(self)
    }
     
     override func viewDidAppear()
@@ -341,6 +423,33 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
          i += 1
       }
    }
+ 
+    @IBAction  func report_Play(_ sender: NSButton) //
+    {
+        print("report_Play: *\(sender.state)*")
+        
+        let pos = Filmtable.selectedRow
+        print("report_Play selected row: \(pos)")
+        if pos >= 0
+        {
+            let playpfad = FilmArray[pos]["pfad"]
+            
+            let filmzeile = FilmArray[pos]
+            let filmpfad = filmzeile["pfad"] ?? "/Volumes/TV_N"
+            let config = NSWorkspace.OpenConfiguration()
+            config.activates = true
+            //let filmURL = fileURLArray[pos]
+            let filmURL = URL(fileURLWithPath: filmpfad)
+            NSWorkspace.shared.open(
+                [filmURL],
+                withApplicationAt: URL(fileURLWithPath: "/System/Applications/QuickTime Player.app"),
+                configuration: config
+            )
+
+        }
+         
+    }
+
     
     @IBAction  func report_Up(_ sender: NSButton) //
     {
@@ -349,6 +458,12 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
     @IBAction  func report_Down(_ sender: NSButton) //
     {
         print("report_Down: *\(sender.state)*")
+        var pos = Filmtable.selectedRow
+        pos += 1
+        print("report_Down selected row: \(pos)")
+        let indexSet = IndexSet.init(integer: pos)
+        Filmtable.selectRowIndexes(indexSet, byExtendingSelection: true)
+        Filmtable.reloadData()
     }
 
     
@@ -592,6 +707,12 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
             print(nummervor)
             print(nummernach)
             Filmtable.reloadData()
+            let indexSet = IndexSet.init(integer: 2)
+            //Filmtable.selectRowIndexes(indexSet, byExtendingSelection: false)
+            //Filmtable.selectRowIndexes(IndexSet(integer: 3), byExtendingSelection: false)
+
+            
+            Filmtable .reloadData()
             // process files
         } catch {
             print("Error while enumerating files \(pfadurl.path): \(error.localizedDescription)")
@@ -713,20 +834,27 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
 //MARK: dataTable
 extension rViewController
 {
-   func numberOfRows(in tableView: NSTableView) -> Int 
+    
+    func tableViewSelectionDidChange(_:Int)
+    {
+        print("tableViewSelectionDidChange pos: \(Filmtable.clickedRow)")
+    }
+    
+   func numberOfRows(in tableView: NSTableView) -> Int
    {
       
       return (FilmArray.count)
       
    }
-   
+ 
+    
    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
       let zeile = FilmArray[row]
-      print("ident: \(tableColumn!.identifier.rawValue)")
+      //print("ident: \(tableColumn!.identifier.rawValue)")
       let ident = tableColumn!.identifier.rawValue
       if ident == "titel"
       {
-         print("Filmzeile: \(zeile)")
+         //print("Filmzeile: \(zeile)")
          let cell = tableView.makeView(withIdentifier: (tableColumn!.identifier), owner: self) as? NSTableCellView
          
          cell?.textField?.stringValue = (zeile[tableColumn!.identifier.rawValue]!)

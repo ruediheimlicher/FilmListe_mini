@@ -14,8 +14,8 @@
             filePath = "FilmListe/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "247"
-            endingLineNumber = "247"
+            startingLineNumber = "329"
+            endingLineNumber = "329"
             landmarkName = "viewDidAppear()"
             landmarkType = "7">
             <Locations>
@@ -77,8 +77,8 @@
             filePath = "FilmListe/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "586"
-            endingLineNumber = "586"
+            startingLineNumber = "701"
+            endingLineNumber = "701"
             landmarkName = "readList()"
             landmarkType = "7">
             <Locations>
@@ -125,8 +125,8 @@
             filePath = "FilmListe/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "238"
-            endingLineNumber = "238"
+            startingLineNumber = "320"
+            endingLineNumber = "320"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
             <Locations>
@@ -203,8 +203,8 @@
             filePath = "FilmListe/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "209"
-            endingLineNumber = "209"
+            startingLineNumber = "288"
+            endingLineNumber = "288"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
@@ -219,8 +219,8 @@
             filePath = "FilmListe/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "211"
-            endingLineNumber = "211"
+            startingLineNumber = "290"
+            endingLineNumber = "290"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
             <Locations>
@@ -267,8 +267,8 @@
             filePath = "FilmListe/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "442"
-            endingLineNumber = "442"
+            startingLineNumber = "557"
+            endingLineNumber = "557"
             landmarkName = "readList()"
             landmarkType = "7">
          </BreakpointContent>
@@ -283,8 +283,8 @@
             filePath = "FilmListe/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "443"
-            endingLineNumber = "443"
+            startingLineNumber = "558"
+            endingLineNumber = "558"
             landmarkName = "readList()"
             landmarkType = "7">
             <Locations>
@@ -346,8 +346,8 @@
             filePath = "FilmListe/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "524"
-            endingLineNumber = "524"
+            startingLineNumber = "639"
+            endingLineNumber = "639"
             landmarkName = "readList()"
             landmarkType = "7">
          </BreakpointContent>
@@ -362,8 +362,8 @@
             filePath = "FilmListe/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "525"
-            endingLineNumber = "525"
+            startingLineNumber = "640"
+            endingLineNumber = "640"
             landmarkName = "readList()"
             landmarkType = "7">
             <Locations>
@@ -410,8 +410,8 @@
             filePath = "FilmListe/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "594"
-            endingLineNumber = "594"
+            startingLineNumber = "709"
+            endingLineNumber = "709"
             landmarkName = "readList()"
             landmarkType = "7">
             <Locations>
@@ -473,8 +473,8 @@
             filePath = "FilmListe/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "498"
-            endingLineNumber = "498"
+            startingLineNumber = "613"
+            endingLineNumber = "613"
             landmarkName = "readList()"
             landmarkType = "7">
          </BreakpointContent>
@@ -489,8 +489,8 @@
             filePath = "FilmListe/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "547"
-            endingLineNumber = "547"
+            startingLineNumber = "662"
+            endingLineNumber = "662"
             landmarkName = "readList()"
             landmarkType = "7">
             <Locations>
@@ -567,8 +567,8 @@
             filePath = "FilmListe/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "543"
-            endingLineNumber = "543"
+            startingLineNumber = "658"
+            endingLineNumber = "658"
             landmarkName = "readList()"
             landmarkType = "7">
             <Locations>
@@ -615,8 +615,8 @@
             filePath = "FilmListe/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "540"
-            endingLineNumber = "540"
+            startingLineNumber = "655"
+            endingLineNumber = "655"
             landmarkName = "readList()"
             landmarkType = "7">
          </BreakpointContent>
@@ -631,8 +631,8 @@
             filePath = "FilmListe/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "560"
-            endingLineNumber = "560"
+            startingLineNumber = "675"
+            endingLineNumber = "675"
             landmarkName = "readList()"
             landmarkType = "7">
             <Locations>
@@ -679,8 +679,8 @@
             filePath = "FilmListe/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "538"
-            endingLineNumber = "538"
+            startingLineNumber = "653"
+            endingLineNumber = "653"
             landmarkName = "readList()"
             landmarkType = "7">
          </BreakpointContent>
@@ -695,10 +695,90 @@
             filePath = "FilmListe/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "536"
-            endingLineNumber = "536"
+            startingLineNumber = "651"
+            endingLineNumber = "651"
             landmarkName = "readList()"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7BAFC0BB-DFDE-48BB-9569-2B7DCAABFFE3"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FilmListe/ViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "463"
+            endingLineNumber = "463"
+            landmarkName = "report_Down(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6266D3A6-5427-4694-ACC4-9793A04C1A23"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FilmListe/ViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "710"
+            endingLineNumber = "710"
+            landmarkName = "readList()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AD307A35-23CE-4F96-94CE-5FC7188A53CA"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FilmListe/ViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "437"
+            endingLineNumber = "437"
+            landmarkName = "report_Play(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "AD307A35-23CE-4F96-94CE-5FC7188A53CA - c8adb5719a75f245"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "FilmListe.rViewController.report_Play(__C.NSButton) -&gt; ()"
+                  moduleName = "FilmListe"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mini21/Documents/FilmListe/FilmListe/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "437"
+                  endingLineNumber = "437"
+                  offsetFromSymbolStart = "1796">
+               </Location>
+               <Location
+                  uuid = "AD307A35-23CE-4F96-94CE-5FC7188A53CA - c8adb5719a75f245"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "FilmListe.rViewController.report_Play(__C.NSButton) -&gt; ()"
+                  moduleName = "FilmListe"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mini21/Documents/FilmListe/FilmListe/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "437"
+                  endingLineNumber = "437"
+                  offsetFromSymbolStart = "1944">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
