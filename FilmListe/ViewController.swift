@@ -274,8 +274,8 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
       var tabletag = info?["tabletag"] as! Int 
       tabletag%=1000
       let playpfad = FilmArray[zeile]["pfad"]
-       let filmurl = URL(fileURLWithPath: playpfad ?? "/Volumes/TV_N/Spielfilm")
-      print("playpfad: \(playpfad) filmurl: \(filmurl)")
+      // let filmurl = URL(fileURLWithPath: playpfad ?? "/Volumes/TV_N/Spielfilm" as! String as! String)
+      //print("playpfad: \(playpfad) filmurl: \(filmurl)")
 
        /*
       guard let playURL = URL.init(string:playpfad!) else
@@ -445,13 +445,14 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
                     let last = titelarray.last ?? "x"
                     print("ordner: \(last)")
                     Kapitelpop.addItem(withTitle: last)
+                    continue
                 }
 
                 let datum = titelarray[0]
                 
                 titelarray.removeFirst()
                 var titelstring = titelarray.joined(separator: " ")
-                 print("Datum: \(datum) *titelstring: \(titelstring)")
+                 //print("Datum: \(datum) *titelstring: \(titelstring)")
                 
                 var titelpfad = pfad+"/"+item
                 var titelurl = URL.init(string: titelpfad)
@@ -504,6 +505,7 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
                 {
                     print("ordner: \(last)")
                     Kapitelpop.addItem(withTitle: last)
+                    continue
                 }
                 if hiddenlist.contains(last)
                 {
@@ -520,9 +522,19 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
                 let genrestring = filmzeilenarray[anz-2]
                 let volumestring = filmzeilenarray[anz-3]
                 var titelarray = filmzeilenarray.last?.components(separatedBy:" ")
-                let datumstring = titelarray?[0]
+                let datumstring:String = titelarray?[0] ?? "200000"
+                var datumzahl = 0
+                // https://stackoverflow.com/questions/24115141/converting-string-to-int-with-swift
+                if let tempzahl = NumberFormatter().number(from: datumstring) {
+                    datumzahl = tempzahl.intValue
+                    // do what you need to do with myInt
+                  } else {
+                    // what ever error code you need to write
+                      datumzahl = 200000
+                  }
                 filmzeilendic["datum"] = datumstring
                 titelarray?.removeFirst()
+                
                 titelarray?.removeFirst()
                 var filmsuffix = titelarray?.last?.components(separatedBy: ".").last
                 var filmtitelraw = titelarray?.last?.components(separatedBy: ".").first ?? "Film"
@@ -535,8 +547,50 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
                 FilmArray.append(filmzeilendic)
                 
             }// for urls
-            //FilmArray.sorted()
-            //print("FilmArray: \(FilmArray)")
+            var nummervor = [String]()
+            var nummernach = [String]()
+            print("FilmArray vor:")
+            for film in FilmArray
+            {
+                nummervor.append(film["datum"] ?? "200000")
+                print("film: \t\(film["datum"]) \t titel: \t\(film["titel"])\t pfad: \t\(film["pfad"]) \t film: \(film)")
+             }
+            print(" ")
+            
+            FilmArray.sort
+            {
+                var datum0 = 0
+                var datum1 = 0
+                if let tempzahl0 = NumberFormatter().number(from: $0["datum"] ?? "200000")
+                {
+                    datum0 = tempzahl0.intValue
+                    
+                } else {
+                    // what ever error code you need to write
+                    datum0 = 200000
+                }
+                //print("datum0: \(datum0)")
+                if let tempzahl1 = NumberFormatter().number(from: $1["datum"] ?? "200001")
+                {
+                    datum1 = tempzahl1.intValue
+                    // do what you need to do with myInt
+                } else {
+                    // what ever error code you need to write
+                    datum1 = 200000
+                }
+                //print("datum0: \(datum0) datum1: \(datum1)")
+                //$0.datum > $1.datum
+                return (datum0 > datum1)
+            } //  sort
+             
+            print("FilmArray nach: ")
+            for film in FilmArray
+            {
+                nummernach.append(film["datum"] ?? "200000")
+                print("film: \t\(film["datum"]) \t titel: \t\(film["titel"])\t pfad: \t\(film["pfad"])  \t film: \(film)")
+            }
+            print(nummervor)
+            print(nummernach)
             Filmtable.reloadData()
             // process files
         } catch {
@@ -668,11 +722,11 @@ extension rViewController
    
    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
       let zeile = FilmArray[row]
-      //print("ident: \(tableColumn!.identifier.rawValue)")
+      print("ident: \(tableColumn!.identifier.rawValue)")
       let ident = tableColumn!.identifier.rawValue
       if ident == "titel"
       {
-         //print("Filmzeile: \(zeile)")
+         print("Filmzeile: \(zeile)")
          let cell = tableView.makeView(withIdentifier: (tableColumn!.identifier), owner: self) as? NSTableCellView
          
          cell?.textField?.stringValue = (zeile[tableColumn!.identifier.rawValue]!)
