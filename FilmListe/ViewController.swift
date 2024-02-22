@@ -232,6 +232,10 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
    @IBOutlet var playerView:AVPlayerView!
     
     var listepos = 0 // Pos in Tableview
+    
+    var abspieldauer = 0;
+    
+    var viewedIndexset = IndexSet()
 
    
    var hintergrundfarbe = NSColor()
@@ -247,7 +251,11 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
       // https://developer.apple.com/forums/thread/654874      Filmtable.usesAutomaticRowHeights = true
       // Do any additional setup after loading the view.
       self.view.window?.acceptsMouseMovedEvents = true
-      Filmtable.headerView?.frame = NSMakeRect(0, 0, (Filmtable.headerView?.frame.width)!, 0.00)
+      
+       
+       viewedIndexset.removeAll()
+       
+       Filmtable.headerView?.frame = NSMakeRect(0, 0, (Filmtable.headerView?.frame.width)!, 0.00)
        Filmtable.headerView?.wantsLayer = true
       Filmtable.headerView?.layer?.backgroundColor = NSColor.red.cgColor
    
@@ -279,7 +287,7 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
            
            for item in items
            {
-               print("\t \(item)")
+               //print("\t \(item)")
                
                if item == "TV_N"
                {/*
@@ -294,11 +302,11 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
            if let volumeurl = userDefaults.object(forKey: "volumeurl") as? URL {
                // let player = AVPlayer(url: defaultsUrl)
                let inhalt = try fileManager.contentsOfDirectory(at: volumeurl,includingPropertiesForKeys: nil)
-               print("inhalt: \(inhalt)")
+               //print("inhalt: \(inhalt)")
            }
            if volumeurl != nil
            {
-               print("volumeurl \t \(volumeurl)")
+               //print("volumeurl \t \(volumeurl)")
                let inhalt = try fileManager.contentsOfDirectory(atPath:"/Volumes" )
                
                print("inhalt \t \t\(inhalt)")}
@@ -702,10 +710,11 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
             for film in FilmArray
             {
                 nummernach.append(film["datum"] ?? "200000")
-                print("film: \t\(film["datum"]) \t titel: \t\(film["titel"])\t pfad: \t\(film["pfad"])  \t film: \(film)")
+                print("film: \t\(film["datum"]) \t titel: \t\(film["titel"])\t pfad: \t\(film["pfad"])  \t film: \(film)\n")
             }
             print(nummervor)
             print(nummernach)
+            
             Filmtable.reloadData()
             let indexSet = IndexSet.init(integer: 2)
             //Filmtable.selectRowIndexes(indexSet, byExtendingSelection: false)

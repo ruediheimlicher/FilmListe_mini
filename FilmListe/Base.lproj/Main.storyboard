@@ -918,6 +918,9 @@
                                 <buttonCell key="cell" type="square" title="Button" bezelStyle="shadowlessSquare" image="play-32" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyUpOrDown" inset="2" id="dhc-H9-pPa">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
                                 </buttonCell>
                                 <connections>
                                     <action selector="report_Play:" target="XfG-lQ-9wD" id="CDm-vu-CyE"/>
