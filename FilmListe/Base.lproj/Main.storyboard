@@ -923,7 +923,7 @@ DQ
 </string>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="report_Play:" target="XfG-lQ-9wD" id="CDm-vu-CyE"/>
+                                    <action selector="report_Play:" target="XfG-lQ-9wD" id="hhI-QV-ge2"/>
                                 </connections>
                             </button>
                         </subviews>
