@@ -433,36 +433,68 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
    }
  
     @IBAction  func report_Play(_ sender: NSButton) //
-    {
-        print("report_Play: *\(sender.state)*")
-        
-        let pos = Filmtable.selectedRow
-        print("report_Play selected row: \(pos)")
-        if pos >= 0
-        {
-            let playpfad = FilmArray[pos]["pfad"]
-            
-            let filmzeile = FilmArray[pos]
-            let filmpfad = filmzeile["pfad"] ?? "/Volumes/TV_N"
-            let config = NSWorkspace.OpenConfiguration()
-            config.activates = true
-            //let filmURL = fileURLArray[pos]
-            let filmURL = URL(fileURLWithPath: filmpfad)
-            NSWorkspace.shared.open(
-                [filmURL],
-                withApplicationAt: URL(fileURLWithPath: "/System/Applications/QuickTime Player.app"),
-                configuration: config
-            )
-
-        }
+   {
+      print("report_Play: *\(sender.state)*")
+      
+      let pos = Filmtable.selectedRow
+      print("report_Play selected row: \(pos)")
+      if pos >= 0
+      {
+         let playpfad = FilmArray[pos]["pfad"]
          
+         let filmzeile = FilmArray[pos]
+         let filmpfad = filmzeile["pfad"] ?? "/Volumes/TV_N"
+         let config = NSWorkspace.OpenConfiguration()
+         config.activates = true
+         //let filmURL = fileURLArray[pos]
+         let filmURL = URL(fileURLWithPath: filmpfad)
+         
+         player = AVPlayer(url:filmURL)
+         
+         //let videoURL = URL(string: "https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_5MB.mp4")
+         //let player = AVPlayer(url: fileURLArray[zeile])
+         
+         let playerController = AVPlayerViewController()
+         playerController.player = player
+         present(playerController, animated: true as! NSViewControllerPresentationAnimator)
+         
+             player.play()
+         
+
+         
+         /*
+         let playerLayer = AVPlayerLayer(player: player)
+         playerLayer.frame = self.view.bounds
+         self.view.layer?.addSublayer(playerLayer)
+         
+         
+         player.play()
+         */
+         
+         /*
+          NSWorkspace.shared.open(
+          [filmURL],
+          withApplicationAt: URL(fileURLWithPath: "/System/Applications/QuickTime Player.app"),
+          configuration: config
+          )
+          */
+      }
+      
+   }
+    
+    @IBAction  func report_OpenDialog(_ sender: NSButton) //
+    {
+        print("report_OpenDialog: *\(sender.state)*")
+        
     }
+
 
     
     @IBAction  func report_Up(_ sender: NSButton) //
     {
         print("report_Up: *\(sender.state)*")
     }
+    
     @IBAction  func report_Down(_ sender: NSButton) //
     {
         print("report_Down: *\(sender.state)*")
@@ -661,7 +693,10 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
                 titelarray?.removeFirst()
                 var filmsuffix = titelarray?.last?.components(separatedBy: ".").last
                 var filmtitelraw = titelarray?.last?.components(separatedBy: ".").first ?? "Film"
-                titelarray?.removeLast()
+                if(titelarray?.count == 0)
+                {
+                    continue
+                }
                 titelarray?.append( filmtitelraw )
                 let titelstring = titelarray?.joined(separator: " ")
                 filmzeilendic["titel"] = titelstring//zeilenarray.last
@@ -703,7 +738,7 @@ class rViewController: NSViewController ,NSTableViewDelegate,NSTableViewDataSour
                 }
                 //print("datum0: \(datum0) datum1: \(datum1)")
                 //$0.datum > $1.datum
-                return (datum0 > datum1)
+                return (datum0 < datum1)
             } //  sort
              
             print("FilmArray nach: ")
